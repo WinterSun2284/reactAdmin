@@ -7,6 +7,6 @@ import ajax from "./ajax";
 //     return ajax("/login",{username,password},"POST")
 // }
 //用户登录
-export const reqLogin=(username,password)=>ajax('/login',username,password,'POST')
+export const reqLogin=(data)=>ajax('/login',data,'POST')
 //添加用户
 export const reqAddUser=(user)=>ajax('/manage/user/add',user,'POST')

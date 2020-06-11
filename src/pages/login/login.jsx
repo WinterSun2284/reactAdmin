@@ -12,12 +12,11 @@ import {reqLogin} from '../../api'
 const form = (state) => {
     const handleSubmit = values => {
         const {username, password} = values
+        var param=new URLSearchParams();
+        param.append("username",username);
+        param.append("password",password)
         //请求登录
-        reqLogin(username,password).then(response=>{
-            console.log("成功")
-        }).catch(error=>{
-            console.log("失败了")
-        })
+        const response = reqLogin(param);
     }
     return (
         <div className="login">
