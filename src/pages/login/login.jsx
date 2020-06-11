@@ -1,22 +1,39 @@
 import React, {Component} from 'react';
 import {Form, Input, Button} from 'antd'
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import {message} from "antd";
+import {Redirect} from "react-router-dom";
 
 import './login.less'
 import logo from './images/logo.png'
 import {reqLogin} from '../../api'
+import memoryUtils from "../../utils/memoryUtils";
+import storageUtils from "../../utils/storageUtils";
 
 /*
 登录的路由组件
  */
-const form = (state) => {
-    const handleSubmit = values => {
+const form = (state,props) => {
+    const handleSubmit = async values => {
         const {username, password} = values
-        var param=new URLSearchParams();
-        param.append("username",username);
-        param.append("password",password)
+        var param = new URLSearchParams();
+        param.append("username", username);
+        param.append("password", password)
         //请求登录
-        const response = reqLogin(param);
+        const result = await reqLogin(param);
+        //登录成功
+        if (result.status===0){
+            const user = result.data;
+            message.success("登录成功，欢迎："+user.username)
+            memoryUtils.user=user//保存在内存中
+            storageUtils.saveUser(user)//保存到local中
+            //跳转到管理界面(不需要回退到登录)
+            props.history.replace("/")
+        }
+        //登录失败
+        else {
+            message.error("登录失败："+result.msg)
+        }
     }
     return (
         <div className="login">
@@ -89,10 +106,14 @@ class Login extends Component {
         super();
         this.state = {}
     }
-
+    //如果用户已经登录，自动跳转到管理界面
     render() {
+        const user = memoryUtils.user;
+        if (user && user._id){
+            return <Redirect to="/"/>
+        }
         return (
-            form(this.state)
+            form(this.state,this.props)
         );
     }
 }
