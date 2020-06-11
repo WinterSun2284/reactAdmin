@@ -4,14 +4,20 @@ import {LockOutlined, UserOutlined} from '@ant-design/icons';
 
 import './login.less'
 import logo from './images/logo.png'
-
+import {reqLogin} from '../../api'
 
 /*
 登录的路由组件
  */
 const form = (state) => {
     const handleSubmit = values => {
-        console.log(values)
+        const {username, password} = values
+        //请求登录
+        reqLogin(username,password).then(response=>{
+            console.log("成功")
+        }).catch(error=>{
+            console.log("失败了")
+        })
     }
     return (
         <div className="login">
@@ -82,8 +88,7 @@ const form = (state) => {
 class Login extends Component {
     constructor() {
         super();
-        this.state = {
-        }
+        this.state = {}
     }
 
     render() {
