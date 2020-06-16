@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom";
+import {Link,withRouter} from "react-router-dom";
 import {Menu, Button} from 'antd';
 import {
     MenuOutlined,
@@ -15,14 +15,21 @@ import {
 
 import "./index.less"
 import logo from "../../assets/images/logo.png"
-import menuList from "../../config/menuConfig";
 
 const {SubMenu} = Menu;
 
 /*
 左侧导航组件
  */
+
 class LeftNav extends Component {
+    constructor(props) {
+        super();
+        this.state={
+            path:'/home'
+        }
+
+    }
     render() {
         return (
             <div className="left-nav">
@@ -30,8 +37,11 @@ class LeftNav extends Component {
                     <img src={logo} alt="logo"/>
                     <h1>wintersun</h1>
                 </Link>
+                {
+                    this.currentlySelected()
+                }
                 <Menu
-                    defaultSelectedKeys={['/home']}
+                    defaultSelectedKeys={this.state.path}
                     // defaultOpenKeys={['sub1']}
                     mode="inline"
                     theme="dark"
@@ -56,6 +66,11 @@ class LeftNav extends Component {
             </div>
 
         );
+    }
+
+    currentlySelected() {
+        const path=this
+        console.log(path)
     }
 }
 
