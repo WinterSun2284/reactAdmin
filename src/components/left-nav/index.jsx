@@ -31,17 +31,15 @@ class LeftNav extends Component {
 
     }
     render() {
+        var path=this.props.location.pathname
         return (
             <div className="left-nav">
                 <Link to='/home' className="left-nav-header">
                     <img src={logo} alt="logo"/>
                     <h1>wintersun</h1>
                 </Link>
-                {
-                    this.currentlySelected()
-                }
                 <Menu
-                    defaultSelectedKeys={this.state.path}
+                    defaultSelectedKeys={[path]}
                     // defaultOpenKeys={['sub1']}
                     mode="inline"
                     theme="dark"
@@ -68,10 +66,6 @@ class LeftNav extends Component {
         );
     }
 
-    currentlySelected() {
-        const path=this
-        console.log(path)
-    }
 }
 
-export default LeftNav;
+export default withRouter(LeftNav);
