@@ -39,8 +39,8 @@ class LeftNav extends Component {
                     <h1>wintersun</h1>
                 </Link>
                 <Menu
-                    defaultSelectedKeys={[path]}
-                    // defaultOpenKeys={['sub1']}
+                    selectedKeys={[path]}
+                    defaultOpenKeys={['sub1']}
                     mode="inline"
                     theme="dark"
                 >
